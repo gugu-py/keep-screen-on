@@ -1,8 +1,8 @@
 /* Define color variables for customization */
 :root {
     --background-start: #0f2027;
-    --background-middle: #203a43;
-    --background-end: #2c5364;
+    --background-middle: #202343;
+    --background-end: #502c64;
     --background-extra: #3e5c76;
   
     --text-color-primary: #f0f8ff;
@@ -59,6 +59,7 @@
     margin-bottom: 2rem;
     color: var(--title-color);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    user-select: none;
   }
   
   /* Toggle button styling */
@@ -94,5 +95,6 @@
     font-size: 1.3rem;
     margin-top: 1.5rem;
     color: var(--text-color-secondary);
+    user-select: none;
   }
   
