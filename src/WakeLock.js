@@ -1,59 +1,53 @@
 import React, { useState } from "react";
+import "./WakeLock.css";
 
 const WakeLock = () => {
   const [wakeLock, setWakeLock] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
-  // Function to request Wake Lock
-  const enableWakeLock = async () => {
+  const toggleWakeLock = async () => {
     try {
-      if ("wakeLock" in navigator) {
-        const lock = await navigator.wakeLock.request("screen");
-        setWakeLock(lock);
-        setIsActive(true);
+      if (!isActive) {
+        if ("wakeLock" in navigator) {
+          const lock = await navigator.wakeLock.request("screen");
+          setWakeLock(lock);
+          setIsActive(true);
 
-        // Handle release when visibility changes
-        document.addEventListener("visibilitychange", () => {
-          if (document.visibilityState === "visible" && !wakeLock) {
-            enableWakeLock();
-          }
-        });
+          document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible" && !wakeLock) {
+              toggleWakeLock();
+            }
+          });
 
-        lock.addEventListener("release", () => {
-          console.log("Wake Lock released");
-          setIsActive(false);
-        });
-
-        console.log("Wake Lock enabled");
+          lock.addEventListener("release", () => {
+            setIsActive(false);
+          });
+        } else {
+          alert("Wake Lock API is not supported in this browser.");
+        }
       } else {
-        alert("Wake Lock API is not supported in this browser.");
+        if (wakeLock) {
+          wakeLock.release();
+          setWakeLock(null);
+          setIsActive(false);
+        }
       }
     } catch (err) {
-      console.error("Failed to enable Wake Lock:", err);
-    }
-  };
-
-  // Function to release Wake Lock
-  const disableWakeLock = () => {
-    if (wakeLock) {
-      wakeLock.release();
-      setWakeLock(null);
-      setIsActive(false);
-      console.log("Wake Lock disabled");
+      console.error("Failed to toggle Wake Lock:", err);
     }
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Keep Screen On</h1>
-      <button onClick={enableWakeLock} disabled={isActive}>
-        Enable Screen Wake Lock
+    <div className="container">
+      <h1 className="title">Keep Screen On</h1>
+      <button
+        className={`toggle-button ${isActive ? "active" : ""}`}
+        onClick={toggleWakeLock}
+      >
+        {isActive ? "Disable Wake Lock" : "Enable Wake Lock"}
       </button>
-      <button onClick={disableWakeLock} disabled={!isActive}>
-        Disable Screen Wake Lock
-      </button>
-      <p>
-        Wake Lock is currently: <b>{isActive ? "Active" : "Inactive"}</b>
+      <p className="status">
+        Wake Lock is: <b>{isActive ? "Active" : "Inactive"}</b>
       </p>
     </div>
   );

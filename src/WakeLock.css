@@ -1,0 +1,91 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg, #c4d3e0, #e6edf7, #b3c7dd, #f1f5fa);
+  background-size: 400% 400%;
+  animation: gradientInactive 12s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  transition: background 0.3s ease;
+}
+
+/* Gradient animation keyframes */
+@keyframes gradientInactive {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradientActive {
+  0% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.2);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+}
+
+/* Active state background animation */
+.container.active {
+  animation: gradientActive 6s ease infinite;
+  background: linear-gradient(135deg, #8bb9d9, #d6e8f7, #a0cce5, #f1f9ff);
+}
+
+/* Title styling */
+.title {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: #4a6579;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle button styling */
+.toggle-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #85a8cf, #6d90b8);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #6d90b8, #85a8cf);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-button.active {
+  background: linear-gradient(135deg, #4a6579, #647d92);
+}
+
+.toggle-button:active {
+  transform: scale(0.95);
+}
+
+/* Status message styling */
+.status {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: #4a6579;
+}
